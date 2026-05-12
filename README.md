@@ -1,2 +1,16 @@
-# model-dowser.github.io
-repo for web hosting
+# Model-Dowser
+
+This is the repository that contains source code for the Model-Dowser [website](https://model-dowser.github.io/).
+
+If you find Model-Dowser useful for your work please cite:
+
+```
+@inproceedings{
+anonymous2026modeldowser,
+title={Model-Dowser: Data-Free Importance Probing to Mitigate Catastrophic Forgetting in Multimodal Large Language Models},
+author={Anonymous},
+booktitle={Forty-third International Conference on Machine Learning},
+year={2026},
+url={https://openreview.net/forum?id=20nWnRkLP4}
+}
+```
