@@ -6,7 +6,7 @@ If you find Model-Dowser useful for your work please cite:
 
 ```
 @inproceedings{
-anonymous2026modeldowser,
+hwang2026modeldowser,
 title={Model-Dowser: Data-Free Importance Probing to Mitigate Catastrophic Forgetting in Multimodal Large Language Models},
 author={Hwang, Hyeontaek and Son, Nguyen Dinh and Kim, Daeyoung},
 booktitle={Forty-third International Conference on Machine Learning},
