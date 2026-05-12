@@ -1,0 +1,422 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="description"
+        content="Model-Dowser: Data-Free Importance Probing to Mitigate Catastrophic Forgetting in Multimodal Large Language Models">
+  <meta name="keywords" content="Model-Dowser, Catastrophic Forgetting, Multimodal Large Language Models, MLLM, Fine-tuning, Sparse Fine-tuning, ICML 2026">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Model-Dowser: Data-Free Importance Probing to Mitigate Catastrophic Forgetting in MLLMs</title>
+
+  <link href="https://fonts.googleapis.com/css?family=Google+Sans|Noto+Sans|Castoro"
+        rel="stylesheet">
+
+  <link rel="stylesheet" href="./static/css/bulma.min.css">
+  <link rel="stylesheet" href="./static/css/bulma-carousel.min.css">
+  <link rel="stylesheet" href="./static/css/bulma-slider.min.css">
+  <link rel="stylesheet" href="./static/css/fontawesome.all.min.css">
+  <link rel="stylesheet"
+        href="https://cdn.jsdelivr.net/gh/jpswalsh/academicons@1/css/academicons.min.css">
+  <link rel="stylesheet" href="./static/css/index.css">
+  <link rel="icon" href="./static/images/favicon.svg">
+
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  <script defer src="./static/js/fontawesome.all.min.js"></script>
+  <script src="./static/js/bulma-carousel.min.js"></script>
+  <script src="./static/js/bulma-slider.min.js"></script>
+  <script src="./static/js/index.js"></script>
+</head>
+<body>
+
+<nav class="navbar" role="navigation" aria-label="main navigation">
+  <div class="navbar-brand">
+    <a role="button" class="navbar-burger" aria-label="menu" aria-expanded="false">
+      <span aria-hidden="true"></span>
+      <span aria-hidden="true"></span>
+      <span aria-hidden="true"></span>
+    </a>
+  </div>
+</nav>
+
+
+<section class="hero">
+  <div class="hero-body">
+    <div class="container is-max-desktop">
+      <div class="columns is-centered">
+        <div class="column has-text-centered">
+          <h1 class="title is-1 publication-title">Model-Dowser: Data-Free Importance Probing to Mitigate Catastrophic Forgetting in Multimodal Large Language Models</h1>
+
+          <div class="is-size-5 publication-authors">
+            <span class="author-block">
+              Hyeontaek Hwang<sup>*</sup>,</span>
+            <span class="author-block">
+              Nguyen Dinh Son<sup>*</sup>,</span>
+            <span class="author-block">
+              Daeyoung Kim<sup>&#x2020;</sup>
+            </span>
+          </div>
+
+          <div class="is-size-5 publication-authors">
+            <span class="author-block">School of Computing, KAIST</span>
+          </div>
+
+          <div class="is-size-6 publication-authors" style="margin-top: 0.25rem;">
+            <span class="author-block"><sup>*</sup>Equal contribution &nbsp;&nbsp; <sup>&#x2020;</sup>Corresponding author</span>
+          </div>
+
+          <div class="is-size-5 publication-authors" style="margin-top: 0.5rem;">
+            <span class="author-block"><strong>ICML 2026</strong></span>
+          </div>
+
+          <div class="column has-text-centered">
+            <div class="publication-links">
+              <!-- PDF Link. -->
+              <span class="link-block">
+                <a href="https://arxiv.org/pdf/2602.04509"
+                   class="external-link button is-normal is-rounded is-dark">
+                  <span class="icon">
+                      <i class="fas fa-file-pdf"></i>
+                  </span>
+                  <span>Paper</span>
+                </a>
+              </span>
+              <!-- arXiv Link. -->
+              <span class="link-block">
+                <a href="https://arxiv.org/abs/2602.04509"
+                   class="external-link button is-normal is-rounded is-dark">
+                  <span class="icon">
+                      <i class="ai ai-arxiv"></i>
+                  </span>
+                  <span>arXiv</span>
+                </a>
+              </span>
+              <!-- Code Link. -->
+              <span class="link-block">
+                <a href="#"
+                   class="external-link button is-normal is-rounded is-dark" disabled style="opacity:0.5; pointer-events:none;">
+                  <span class="icon">
+                      <i class="fab fa-github"></i>
+                  </span>
+                  <span>Code (coming soon)</span>
+                </a>
+              </span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<section class="section">
+  <div class="container is-max-desktop">
+    <!-- Abstract. -->
+    <div class="columns is-centered has-text-centered">
+      <div class="column is-four-fifths">
+        <h2 class="title is-3">Abstract</h2>
+        <div class="content has-text-justified">
+          <p>
+            Fine-tuning Multimodal Large Language Models (MLLMs) on task-specific data is an effective way to improve performance on downstream applications.
+            However, such adaptation often leads to a degradation in generalization on pretrained tasks, a phenomenon known as Catastrophic Forgetting.
+            Existing methods that aim to mitigate this issue either become ineffective when fine-tuning deeper layers of the language decoder or scale poorly with increasing model size.
+          </p>
+          <p>
+            To address these limitations, we propose <strong>Model-Dowser</strong>, a novel sparse fine-tuning approach for MLLMs.
+            Model-Dowser measures a principled importance score for each model parameter with respect to pretrained generalization (prior to downstream adaptation) by jointly considering weight magnitudes, input activations, and output sensitivities.
+            During fine-tuning, Model-Dowser selectively preserves high-importance parameters and updates the remaining.
+          </p>
+          <p>
+            Comprehensive experiments on two representative MLLMs, LLaVA and NVILA, demonstrate that Model-Dowser effectively mitigates catastrophic forgetting and consistently outperforms prior methods, while remaining resource-efficient and scalable to multi-billion-parameter models.
+          </p>
+        </div>
+      </div>
+    </div>
+    <!--/ Abstract. -->
+  </div>
+</section>
+
+
+<section class="section">
+  <div class="container is-max-desktop">
+
+    <!-- Motivation. -->
+    <div class="columns is-centered">
+      <div class="column is-full-width">
+        <h2 class="title is-3">Motivation</h2>
+        <div class="content has-text-justified">
+          <p>
+            Recent work on catastrophic forgetting in MLLMs is predominantly evaluated under <em>shallow</em> fine-tuning settings, where only the last few layers of the language decoder are updated.
+            However, earlier layers play a critical role in multimodal understanding, suggesting that shallow fine-tuning may not fully exploit the model's adaptation capacity.
+          </p>
+          <p>
+            We examine forgetting under <em>deeper</em> fine-tuning regimes and find that post-merging methods degrade rapidly once fine-tuning extends to earlier decoder layers.
+            Sparse fine-tuning methods are more stable, but their memory overhead limits scalability.
+            <strong>Model-Dowser</strong> remains robust across all fine-tuning depths while matching the memory complexity of standard fine-tuning.
+          </p>
+        </div>
+        <div class="columns is-centered">
+          <div class="column">
+            <figure class="image">
+              <img src="./static/images/radar_comparison.png"
+                   alt="Radar chart comparing Model-Dowser against baselines on LLaVA and NVILA fine-tuned on ImageNet-R."/>
+            </figure>
+            <p class="has-text-centered is-size-7" style="margin-top:0.5rem;">
+              Radar charts comparing upstream and downstream task balance across methods.
+            </p>
+          </div>
+          <div class="column">
+            <figure class="image">
+              <img src="./static/images/h_score_plot.png"
+                   alt="H-score stability across varying fine-tuning depths for Model-Dowser and baselines."/>
+            </figure>
+            <p class="has-text-centered is-size-7" style="margin-top:0.5rem;">
+              H-score stability across varying fine-tuning depths. Model-Dowser (red) consistently outperforms prior methods.
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!--/ Motivation. -->
+
+    <!-- Method. -->
+    <div class="columns is-centered" style="margin-top: 2rem;">
+      <div class="column is-full-width">
+        <h2 class="title is-3">Method Overview</h2>
+        <div class="content has-text-justified">
+          <p>
+            Model-Dowser consists of a three-stage pipeline that identifies and preserves functionally critical parameters before downstream fine-tuning:
+          </p>
+          <ol>
+            <li>
+              <strong>Probing</strong> &mdash; Sample Jacobian matrices and input activations using synthetically generated prompts.
+              This data-free step leverages the MLLM's own generative capability to probe its functional response without requiring access to the original pretraining data.
+            </li>
+            <li>
+              <strong>Compute Score</strong> &mdash; Assign a sensitivity-based importance score to each parameter:
+              <em>S<sub>ij</sub> = &#x2016;J<sub>i</sub>&#x2016;<sub>2</sub> &middot; |W<sub>ij</sub>| &middot; |h<sub>j&minus;1</sub>|</em>,
+              jointly capturing output sensitivity, connection strength, and input activity.
+            </li>
+            <li>
+              <strong>Sparse Fine-tuning</strong> &mdash; Freeze the top-importance parameters and update only the least important &rho;% during downstream adaptation, preserving pretrained knowledge while enabling task-specific learning.
+            </li>
+          </ol>
+        </div>
+        <figure class="image">
+          <img src="./static/images/method.png"
+               alt="Overall architecture of Model-Dowser showing the three-stage pipeline: Probing, Compute Score, and Sparse Fine-tuning."/>
+        </figure>
+        <p class="has-text-centered is-size-7" style="margin-top:0.5rem;">
+          Overall architecture of Model-Dowser. Parameters highlighted in yellow are updated during sparse fine-tuning.
+        </p>
+      </div>
+    </div>
+    <!--/ Method. -->
+
+    <!-- Contributions. -->
+    <div class="columns is-centered" style="margin-top: 2rem;">
+      <div class="column is-full-width">
+        <h2 class="title is-3">Key Contributions</h2>
+        <div class="content">
+          <ul>
+            <li>
+              <strong>Forgetting diagnosis across fine-tuning depth.</strong>
+              We reveal that MLLMs experience severe catastrophic forgetting as fine-tuning extends to earlier decoder layers, and that existing approaches are either ineffective or exhibit inconsistent behavior under this regime.
+            </li>
+            <li>
+              <strong>A scalable sparse fine-tuning method.</strong>
+              Model-Dowser introduces a data-free importance score derived from input activations and output sensitivity, selectively freezing critical parameters to enable effective downstream learning without loss of pretrained knowledge.
+            </li>
+            <li>
+              <strong>Theoretical justification.</strong>
+              We provide a theoretical analysis showing that our importance score captures the sensitivity of model outputs to individual parameter perturbations, explaining why preserving high-score parameters retains pretrained generalization.
+            </li>
+            <li>
+              <strong>State-of-the-art results with practical efficiency.</strong>
+              Experiments on LLaVA-1.5-7B and NVILA-Lite-2B across diverse downstream tasks show that Model-Dowser consistently outperforms prior methods while requiring no additional memory beyond standard fine-tuning.
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+    <!--/ Contributions. -->
+
+    <!-- Key Findings. -->
+    <div class="columns is-centered" style="margin-top: 2rem;">
+      <div class="column is-full-width">
+        <h2 class="title is-3">Key Findings</h2>
+
+        <!-- Finding 1: Robust Balance -->
+        <h3 class="title is-4">1. Robust Balance Between Upstream and Downstream Performance</h3>
+        <div class="content has-text-justified">
+          <p>
+            Across all benchmarks, different methods often achieve comparable downstream performance, but their ability to preserve pretrained knowledge varies significantly.
+            Model-Dowser achieves the highest H-scores among all evaluated methods by preserving functionally sensitive parameters during sparse fine-tuning.
+            For example, on NVILA-Lite-2B, Model-Dowser achieves H-scores of <strong>85.7</strong> and <strong>71.2</strong> on COCO-Caption and ImageNet-R respectively,
+            outperforming the second-best (SPIDER) by 7.4 and 10.7 points.
+            On LLaVA-1.5-7B, it achieves H-scores of <strong>79.9</strong> and <strong>69.7</strong> on the same tasks.
+          </p>
+        </div>
+
+        <!-- Radar charts: all 4 tasks -->
+        <p class="has-text-centered is-size-6 has-text-weight-semibold" style="margin-bottom:0.5rem;">Performance comparison on NVILA-Lite-2B and LLaVA-1.5-7B across all downstream tasks</p>
+        <div class="columns is-centered">
+          <div class="column">
+            <figure class="image">
+              <img src="./static/images/radar_comparison.png"
+                   alt="Radar charts for ImageNet-R on LLaVA and NVILA"/>
+            </figure>
+            <p class="has-text-centered is-size-7" style="margin-top:0.25rem;">ImageNet-R</p>
+          </div>
+          <div class="column">
+            <figure class="image">
+              <img src="./static/images/radar_comparison_COCO-Caption_other.png"
+                   alt="Radar charts for COCO-Caption"/>
+            </figure>
+            <p class="has-text-centered is-size-7" style="margin-top:0.25rem;">COCO-Caption</p>
+          </div>
+        </div>
+        <div class="columns is-centered">
+          <div class="column">
+            <figure class="image">
+              <img src="./static/images/radar_comparison_Flickr30k_other.png"
+                   alt="Radar charts for Flickr30k"/>
+            </figure>
+            <p class="has-text-centered is-size-7" style="margin-top:0.25rem;">Flickr30k</p>
+          </div>
+          <div class="column">
+            <figure class="image">
+              <img src="./static/images/radar_comparison_IconQA_other.png"
+                   alt="Radar charts for IconQA"/>
+            </figure>
+            <p class="has-text-centered is-size-7" style="margin-top:0.25rem;">IconQA</p>
+          </div>
+        </div>
+
+        <!-- Finding 2: Layer depth -->
+        <h3 class="title is-4" style="margin-top: 2rem;">2. Increased Vulnerability of Early Decoder Layers</h3>
+        <div class="content has-text-justified">
+          <p>
+            Layer-wise analysis reveals that catastrophic forgetting is most severe when fine-tuning extends to early decoder layers.
+            Post-merging methods (Grafting, DARE, Tailor) maintain stability across the last 4–16 layers but collapse when updates reach earlier layers, because post-hoc weight patching cannot recover from extensive disruption.
+            SPIDER is more stable but still underperforms Model-Dowser across all 32 layers on LLaVA and 28 layers on NVILA.
+            Model-Dowser preserves sensitive functional anchors across all depths, sustaining stability throughout.
+          </p>
+        </div>
+        <figure class="image">
+          <img src="./static/images/layer_depth_comparison.png"
+               alt="Performance comparison across fine-tuning depths on COCO and ImageNet-R."/>
+        </figure>
+        <p class="has-text-centered is-size-7" style="margin-top:0.5rem;">
+          Performance across fine-tuning depths on COCO-Caption and ImageNet-R. The x-axis shows the number of fine-tuned layers, counted from the output layer toward the input layer.
+        </p>
+        <figure class="image" style="margin-top: 1rem;">
+          <img src="./static/images/layer_depth_comparison_flick_cion.png"
+               alt="Performance comparison across fine-tuning depths on Flickr30k and IconQA."/>
+        </figure>
+        <p class="has-text-centered is-size-7" style="margin-top:0.5rem;">
+          Performance across fine-tuning depths on Flickr30k and IconQA.
+        </p>
+
+        <!-- Finding 3: Update ratio robustness -->
+        <h3 class="title is-4" style="margin-top: 2rem;">3. Robustness to Update Ratios</h3>
+        <div class="content has-text-justified">
+          <p>
+            Model-Dowser maintains a wide operational window for the update ratio &rho;.
+            Average upstream performance remains stable for mask ratios up to &rho;&nbsp;=&nbsp;0.25, and consistently outperforms Full-FT (&rho;&nbsp;=&nbsp;1.0) across all settings.
+            This demonstrates that the functional importance identified by sensitivity scoring is highly concentrated: as long as the most critical parameters are protected, the model remains robust to significant task-specific updates elsewhere.
+          </p>
+        </div>
+        <figure class="image">
+          <img src="./static/images/mask_ratio_linechart.png"
+               alt="Performance across mask ratios on COCO-Caption and ImageNet-R."/>
+        </figure>
+        <p class="has-text-centered is-size-7" style="margin-top:0.5rem;">
+          Upstream/downstream performance across update ratios (&rho;) on COCO-Caption and ImageNet-R for NVILA-Lite-2B (a–b) and LLaVA-1.5-7B (c–d).
+        </p>
+        <figure class="image" style="margin-top: 1rem;">
+          <img src="./static/images/mask_ratio_linechart_flick_icon.png"
+               alt="Performance across mask ratios on Flickr30k and IconQA."/>
+        </figure>
+        <p class="has-text-centered is-size-7" style="margin-top:0.5rem;">
+          Same analysis on Flickr30k and IconQA.
+        </p>
+
+        <!-- Finding 4: Stability of estimation -->
+        <h3 class="title is-4" style="margin-top: 2rem;">4. Stability of Data-Free Importance Estimation</h3>
+        <div class="content has-text-justified">
+          <p>
+            The data-free importance estimation yields a stable, robust ranking of parameter sensitivity.
+            With R&nbsp;=&nbsp;8 Rademacher vectors and N&nbsp;=&nbsp;64 Monte Carlo samples, Model-Dowser achieves a Hamming distance of <strong>0.050&nbsp;&plusmn;&nbsp;0.002</strong> and Spearman correlation of <strong>0.891&nbsp;&plusmn;&nbsp;0.003</strong> relative to real-data scoring, while random selection shows zero correlation.
+          </p>
+        </div>
+        <figure class="image">
+          <img src="./static/images/figure_significance_analysis_combined_M.png"
+               alt="Significance analysis of data-free importance estimation."/>
+        </figure>
+        <p class="has-text-centered is-size-7" style="margin-top:0.5rem;">
+          Significance analysis of the data-free importance estimation.
+        </p>
+
+      </div>
+    </div>
+    <!--/ Key Findings. -->
+
+    <!-- Related Links. -->
+    <div class="columns is-centered" style="margin-top: 2rem;">
+      <div class="column is-full-width">
+        <h2 class="title is-3">Related Links</h2>
+        <div class="content has-text-justified">
+          <p>
+            <a href="https://arxiv.org/abs/2304.08485">LLaVA</a> and <a href="https://arxiv.org/abs/2501.01628">NVILA</a> are the two representative MLLM architectures used in our experiments.
+          </p>
+        </div>
+      </div>
+    </div>
+    <!--/ Related Links. -->
+
+  </div>
+</section>
+
+
+<section class="section" id="BibTeX">
+  <div class="container is-max-desktop content">
+    <h2 class="title">BibTeX</h2>
+    <pre><code>@inproceedings{
+anonymous2026modeldowser,
+title={Model-Dowser: Data-Free Importance Probing to Mitigate Catastrophic Forgetting in Multimodal Large Language Models},
+author={Hwang, Hyeontaek and Son, Nguyen Dinh and Kim, Daeyoung},
+booktitle={Forty-third International Conference on Machine Learning},
+year={2026},
+url={https://openreview.net/forum?id=20nWnRkLP4}
+}</code></pre>
+  </div>
+</section>
+
+
+<footer class="footer">
+  <div class="container">
+    <div class="content has-text-centered">
+      <a class="icon-link" href="https://arxiv.org/pdf/2602.04509">
+        <i class="fas fa-file-pdf"></i>
+      </a>
+    </div>
+    <div class="columns is-centered">
+      <div class="column is-8">
+        <div class="content">
+          <p>
+            This website is licensed under a <a rel="license"
+                                                href="http://creativecommons.org/licenses/by-sa/4.0/">Creative
+            Commons Attribution-ShareAlike 4.0 International License</a>.
+          </p>
+          <p>
+            Website template borrowed from <a href="https://github.com/nerfies/nerfies.github.io">Nerfies</a>.
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+</footer>
+
+</body>
+</html>
