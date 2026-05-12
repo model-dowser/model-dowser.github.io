@@ -1,5 +1,10 @@
+# General
 .DS_Store
-static/.DS_Store
-*.DS_Store
-*/.DS_Store
-*/*/.DS_Store
+.localized
+__MACOSX/
+.AppleDouble
+.LSOverride
+Icon[]
+
+# Resource forks
+._*
