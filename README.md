@@ -4,7 +4,7 @@ This is the repository that contains source code for the Model-Dowser [website](
 
 If you find Model-Dowser useful for your work please cite:
 
-```
+```bibtex
 @inproceedings{
       hwang2026modeldowser,
       title={Model-Dowser: Data-Free Importance Probing to Mitigate Catastrophic Forgetting in Multimodal Large Language Models},
