@@ -110,6 +110,16 @@
                   <span>Code</span>
                 </a>
               </span>
+              <!-- BibTeX Link. -->
+              <span class="link-block">
+                <a href="#BibTeX"
+                   class="external-link button is-normal is-rounded is-dark">
+                  <span class="icon">
+                      <i class="fas fa-quote-right"></i>
+                  </span>
+                  <span>BibTeX</span>
+                </a>
+              </span>
             </div>
           </div>
         </div>
@@ -392,7 +402,14 @@
 <section class="section" id="BibTeX">
   <div class="container is-max-desktop content">
     <h2 class="title">BibTeX</h2>
-    <pre><code>@inproceedings{
+    <div style="position: relative;">
+      <button id="bibtex-copy-button" class="button is-small is-rounded"
+              style="position: absolute; top: 0.5rem; right: 0.5rem;"
+              onclick="copyBibtex(this)">
+        <span class="icon is-small"><i class="fas fa-copy"></i></span>
+        <span>Copy</span>
+      </button>
+      <pre><code id="bibtex-code">@inproceedings{
 hwang2026modeldowser,
 title={Model-Dowser: Data-Free Importance Probing to Mitigate Catastrophic Forgetting in Multimodal Large Language Models},
 author={Hyeontaek Hwang and Nguyen Dinh Son and Daeyoung Kim},
@@ -400,6 +417,7 @@ booktitle={Forty-third International Conference on Machine Learning},
 year={2026},
 url={https://openreview.net/forum?id=20nWnRkLP4}
 }</code></pre>
+    </div>
   </div>
 </section>
 

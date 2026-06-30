@@ -1,5 +1,17 @@
 window.HELP_IMPROVE_VIDEOJS = false;
 
+function copyBibtex(button) {
+  var text = document.getElementById('bibtex-code').innerText;
+  navigator.clipboard.writeText(text).then(function() {
+    var label = button.querySelector('span:last-child');
+    var originalText = label.textContent;
+    label.textContent = 'Copied!';
+    setTimeout(function() {
+      label.textContent = originalText;
+    }, 1500);
+  });
+}
+
 var INTERP_BASE = "./static/interpolation/stacked";
 var NUM_INTERP_FRAMES = 240;
 
